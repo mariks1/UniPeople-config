@@ -17,6 +17,33 @@ spring:
     enabled: true
     schemas: employment
     locations: classpath:db/migration
+    cloud:
+    openfeign:
+      client:
+        config:
+          organization-service:
+            connect-timeout: 2000
+            read-timeout: 3000
+            logger-level: basic
+          employee-service:
+            connect-timeout: 2000
+            read-timeout: 3000
+            logger-level: basic
+resilience4j:
+  circuitbreaker:
+    instances:
+      orgClient:
+        sliding-window-size: 20
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+      employeeClient:
+        sliding-window-size: 20
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
 eureka:
   client:
     service-url:
