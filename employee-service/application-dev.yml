@@ -32,9 +32,15 @@ resilience4j:
         wait-duration-in-open-state: 5s
         permitted-number-of-calls-in-half-open-state: 5
         automatic-transition-from-open-to-half-open-enabled: true
+        record-exceptions:
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - java.net.UnknownHostException
+          - feign.RetryableException
         ignore-exceptions:
           - feign.FeignException.NotFound
 eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:18761/eureka
+    registryFetchIntervalSeconds: 5

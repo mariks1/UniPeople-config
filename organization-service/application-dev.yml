@@ -18,6 +18,7 @@ spring:
     schemas: org
     locations: classpath:db/migration
   cloud:
+    loadbalancer.cache.ttl: 5s
     openfeign:
       client:
         config:
@@ -34,9 +35,13 @@ resilience4j:
         wait-duration-in-open-state: 5s
         permitted-number-of-calls-in-half-open-state: 5
         automatic-transition-from-open-to-half-open-enabled: true
-        ignore-exceptions:
-          - feign.FeignException.NotFound
+        record-exceptions:
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - java.net.UnknownHostException
+          - feign.RetryableException
 eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:18761/eureka
+    registryFetchIntervalSeconds: 5
