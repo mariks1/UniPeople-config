@@ -13,6 +13,11 @@ spring:
       ddl-auto: validate
     properties:
       hibernate.default_schema: employment
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
   flyway:
     enabled: true
     schemas: employment

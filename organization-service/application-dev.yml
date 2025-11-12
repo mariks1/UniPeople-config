@@ -17,6 +17,11 @@ spring:
     enabled: true
     schemas: org
     locations: classpath:db/migration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
   cloud:
     loadbalancer.cache.ttl: 5s
     openfeign:

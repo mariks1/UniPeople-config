@@ -15,6 +15,11 @@ spring:
   flyway:
     enabled: true
     schemas: employee
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
   cloud:
     openfeign:
       client:

@@ -8,6 +8,10 @@ spring:
           default-filters:
             - PreserveHostHeader
           routes:
+          - id: auth-jwks
+            uri: lb://auth-service
+            predicates: [ Path=/auth/.well-known/jwks.json ]
+            filters: [ StripPrefix=1 ]
           - id: employee-api
             uri: lb://employee-service
             predicates:
@@ -77,11 +81,18 @@ spring:
             port-enabled: true
             proto-enabled: true
             prefix-enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
 server:
   port: 8080
 springdoc:
   swagger-ui:
     urls:
+      - name: Auth
+      - url: /docs/auth/v3/api-docs
       - name: Employee
         url: /docs/employee/v3/api-docs
       - name: Organization

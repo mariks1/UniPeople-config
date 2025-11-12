@@ -11,14 +11,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    properties:
-      hibernate.default_schema: auth
-      hibernate.jdbc.time_zone: UTC
+    properties.hibernate.default_schema: duty
   flyway:
     enabled: true
-    schemas: auth
+    schemas: duty
     locations: classpath:db/migration
-
 eureka:
   client:
     service-url:
