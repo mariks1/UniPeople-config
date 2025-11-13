@@ -11,10 +11,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    properties.hibernate.default_schema: duty
+    properties.hibernate.default_schema: auth
   flyway:
     enabled: true
-    schemas: duty
+    schemas: auth
     locations: classpath:db/migration
 eureka:
   client:
