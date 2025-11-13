@@ -41,6 +41,13 @@ spring:
             predicates:
               - Path=/api/v1/leave-types/**
 
+          - id: auth-docs
+            uri: lb://auth-service
+            predicates:
+              - Path=/docs/auth/v3/api-docs
+            filters:
+              - RewritePath=/docs/auth/(?<segment>.*), /${segment}
+
           - id: duty-docs
             uri: lb://duty-service
             predicates:
