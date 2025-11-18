@@ -17,7 +17,12 @@ spring:
     password: postgres
     schemas: leave
     locations: classpath:db/migration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://eureka-server:18761/eureka

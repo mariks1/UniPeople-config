@@ -3,7 +3,7 @@ server:
   forward-headers-strategy: framework
 spring:
   application:
-    name: employee-service
+    name: organization-service
   datasource:
     url: jdbc:postgresql://postgres:5432/unipeople
     username: postgres
@@ -11,28 +11,42 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    properties.hibernate.default_schema: employee
+    properties:
+      hibernate.default_schema: org
   flyway:
     enabled: true
-    schemas: employee
+    schemas: org
+    locations: classpath:db/migration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
   cloud:
+    loadbalancer.cache.ttl: 5s
     openfeign:
       client:
         config:
-          organization-service:
+          employee-service:
             connect-timeout: 2000
             read-timeout: 3000
             logger-level: basic
 resilience4j:
   circuitbreaker:
     instances:
-      orgClient:
+      employeeClient:
         sliding-window-size: 20
         failure-rate-threshold: 50
         wait-duration-in-open-state: 5s
         permitted-number-of-calls-in-half-open-state: 5
         automatic-transition-from-open-to-half-open-enabled: true
+        record-exceptions:
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - java.net.UnknownHostException
+          - feign.RetryableException
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://eureka-server:18761/eureka
+    registryFetchIntervalSeconds: 5

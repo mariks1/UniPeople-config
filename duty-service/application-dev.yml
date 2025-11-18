@@ -16,6 +16,11 @@ spring:
     enabled: true
     schemas: duty
     locations: classpath:db/migration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
   cloud:
     openfeign:
       client:
@@ -45,9 +50,15 @@ resilience4j:
         wait-duration-in-open-state: 5s
         permitted-number-of-calls-in-half-open-state: 5
         automatic-transition-from-open-to-half-open-enabled: true
+        record-exceptions:
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - java.net.UnknownHostException
+          - feign.RetryableException
         ignore-exceptions:
           - feign.FeignException.NotFound
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://eureka-server:18761/eureka
+    registryFetchIntervalSeconds: 5

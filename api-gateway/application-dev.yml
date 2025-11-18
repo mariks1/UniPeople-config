@@ -8,6 +8,14 @@ spring:
           default-filters:
             - PreserveHostHeader
           routes:
+          - id: auth-jwks
+            uri: lb://auth-service
+            predicates: [ Path=/auth/.well-known/jwks.json ]
+            filters: [ StripPrefix=1 ]
+          - id: auth-api
+            uri: lb://auth-service
+            predicates:
+              - Path=/api/v1/auth/**
           - id: employee-api
             uri: lb://employee-service
             predicates:
@@ -32,6 +40,13 @@ spring:
             uri: lb://leave-service
             predicates:
               - Path=/api/v1/leave-types/**
+
+          - id: auth-docs
+            uri: lb://auth-service
+            predicates:
+              - Path=/docs/auth/v3/api-docs
+            filters:
+              - RewritePath=/docs/auth/(?<segment>.*), /${segment}
 
           - id: duty-docs
             uri: lb://duty-service
@@ -77,11 +92,18 @@ spring:
             port-enabled: true
             proto-enabled: true
             prefix-enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
 server:
   port: 8080
 springdoc:
   swagger-ui:
     urls:
+      - name: Auth
+      - url: /docs/auth/v3/api-docs
       - name: Employee
         url: /docs/employee/v3/api-docs
       - name: Organization
@@ -95,4 +117,4 @@ springdoc:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://eureka-server:18761/eureka
