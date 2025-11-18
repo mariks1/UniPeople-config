@@ -103,7 +103,7 @@ springdoc:
   swagger-ui:
     urls:
       - name: Auth
-      - url: /docs/auth/v3/api-docs
+        url: /docs/auth/v3/api-docs
       - name: Employee
         url: /docs/employee/v3/api-docs
       - name: Organization
