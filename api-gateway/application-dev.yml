@@ -96,11 +96,12 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
+          jwk-set-uri: http://api-gateway:18080/auth/.well-known/jwks.json
 server:
-  port: 8080
+  port: 18080
 springdoc:
   swagger-ui:
+    persistAuthorization: true
     urls:
       - name: Auth
       - url: /docs/auth/v3/api-docs

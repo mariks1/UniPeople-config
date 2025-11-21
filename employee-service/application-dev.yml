@@ -19,7 +19,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://api-gateway:8080/auth/.well-known/jwks.json
+          jwk-set-uri: http://api-gateway:18080/auth/.well-known/jwks.json
   cloud:
     openfeign:
       client:
