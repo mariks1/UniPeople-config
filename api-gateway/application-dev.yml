@@ -92,11 +92,6 @@ spring:
             port-enabled: true
             proto-enabled: true
             prefix-enabled: true
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://api-gateway:18080/auth/.well-known/jwks.json
 server:
   port: 18080
 springdoc:
