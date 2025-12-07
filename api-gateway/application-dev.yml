@@ -20,6 +20,10 @@ spring:
             uri: lb://employee-service
             predicates:
               - Path=/api/v1/employees/**
+          - id: file-api
+            uri: lb://file-service
+            predicates:
+              - Path=/api/v1/files/**
           - id: organization-api
             uri: lb://organization-service
             predicates:
@@ -54,6 +58,13 @@ spring:
               - Path=/docs/duty/v3/api-docs
             filters:
               - RewritePath=/docs/duty/(?<segment>.*), /$\{segment}
+
+          - id: file-docs
+            uri: lb://file-service
+            predicates:
+              - Path=/docs/file/v3/api-docs
+            filters:
+              - RewritePath=/docs/file/(?<segment>.*), /$\{segment}
 
           - id: leave-docs
             uri: lb://leave-service
@@ -110,6 +121,9 @@ springdoc:
         url: /docs/duty/v3/api-docs
       - name: Leave
         url: /docs/leave/v3/api-docs
+      - name: File
+        url: /docs/file/v3/api-docs
+
 eureka:
   client:
     service-url:
