@@ -39,7 +39,7 @@ eureka:
       defaultZone: http://eureka-server:18761/eureka
 
 s3:
-  endpoint: http://minio:19000
+  endpoint: http://minio:9000
   region: us-east-1
   bucket: unipeople-files
   access-key: minio_root
