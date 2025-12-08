@@ -38,8 +38,12 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:18761/eureka
 
-files:
-  storage-dir: /data/files
+s3:
+  endpoint: http://minio:9000
+  region: us-east-1
+  bucket: unipeople-files
+  access-key: minio_root
+  secret-key: minio_password
 
 logging:
   level:
