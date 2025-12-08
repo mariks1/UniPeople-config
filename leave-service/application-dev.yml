@@ -26,3 +26,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:18761/eureka
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.oauth2.jwt: DEBUG
+    org.springframework.security.oauth2.server.resource: DEBUG
