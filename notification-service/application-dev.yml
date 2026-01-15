@@ -1,4 +1,9 @@
+server:
+  port: 0
+  forward-headers-strategy: framework
 spring:
+  application:
+    name: notification-service
   datasource:
     url: jdbc:postgresql://postgres:5432/unipeople
     username: postgres
@@ -10,7 +15,7 @@ spring:
   flyway:
     enabled: true
     schemas: notif
-
+    locations: classpath:db/migration
   kafka:
     bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
     consumer:
@@ -25,7 +30,11 @@ spring:
         spring.json.value.default.type: java.util.Map
     listener:
       ack-mode: manual
-
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:18761/eureka
+    registryFetchIntervalSeconds: 5
 kafka:
   topics:
     employee: employee.events
