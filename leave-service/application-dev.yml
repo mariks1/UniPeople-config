@@ -29,8 +29,9 @@ spring:
       acks: all
       properties:
         enable.idempotence: true
+        compression.type: zstd
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 eureka:
   client:
     service-url:
