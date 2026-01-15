@@ -1,9 +1,16 @@
-
-server:
-  port: 0
 spring:
-  application:
-    name: notification-service
+  datasource:
+    url: jdbc:postgresql://postgres:5432/unipeople
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties.hibernate.default_schema: notif
+  flyway:
+    enabled: true
+    schemas: notif
+
   kafka:
     bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
     consumer:
@@ -11,18 +18,17 @@ spring:
       auto-offset-reset: earliest
       enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
         spring.json.trusted.packages: "*"
+        spring.json.value.default.type: java.util.Map
+    listener:
+      ack-mode: manual
 
 kafka:
   topics:
-    leave: leave.events
     employee: employee.events
+    leave: leave.events
     duty: duty.events
     dlq: notification.dlq
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:18761/eureka
