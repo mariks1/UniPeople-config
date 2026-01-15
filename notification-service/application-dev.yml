@@ -1,0 +1,28 @@
+
+server:
+  port: 0
+spring:
+  application:
+    name: notification-service
+  kafka:
+    bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+    consumer:
+      group-id: notification-service
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+
+kafka:
+  topics:
+    leave: leave.events
+    employee: employee.events
+    duty: duty.events
+    dlq: notification.dlq
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:18761/eureka

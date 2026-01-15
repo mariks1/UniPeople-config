@@ -28,6 +28,14 @@ spring:
             connect-timeout: 2000
             read-timeout: 3000
             logger-level: basic
+  kafka:
+    bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 resilience4j:
   circuitbreaker:
     instances:
@@ -49,3 +57,7 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:18761/eureka
     registryFetchIntervalSeconds: 5
+
+kafka:
+  topics:
+    employee: employee.events

@@ -1,3 +1,4 @@
+
 server:
   port: 0
   forward-headers-strategy: framework
@@ -22,14 +23,24 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://api-gateway:18080/auth/.well-known/jwks.json
+  kafka:
+    bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:18761/eureka
-
 logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
     org.springframework.security.oauth2.jwt: DEBUG
     org.springframework.security.oauth2.server.resource: DEBUG
+kafka:
+  topics:
+    leave: leave.events
