@@ -44,6 +44,11 @@ spring:
             uri: lb://leave-service
             predicates:
               - Path=/api/v1/leave-types/**
+          - id: notification-api
+            uri: lb://notification-service
+            predicates:
+              - Path=/api/v1/notifications/**
+
 
           - id: auth-docs
             uri: lb://auth-service
@@ -58,6 +63,13 @@ spring:
               - Path=/docs/duty/v3/api-docs
             filters:
               - RewritePath=/docs/duty/(?<segment>.*), /$\{segment}
+
+          - id: notification-docs
+            uri: lb://notification-service
+            predicates:
+              - Path=/docs/notification/v3/api-docs
+            filters:
+              - RewritePath=/docs/notification/(?<segment>.*), /$\{segment}
 
           - id: file-docs
             uri: lb://file-service
@@ -123,6 +135,8 @@ springdoc:
         url: /docs/leave/v3/api-docs
       - name: File
         url: /docs/file/v3/api-docs
+      - name: Notification
+        url: /docs/notification/v3/api-docs
 
 eureka:
   client:
