@@ -22,7 +22,7 @@ spring:
     enabled: true
     schemas: employment
     locations: classpath:db/migration
-    cloud:
+  cloud:
     openfeign:
       client:
         config:
